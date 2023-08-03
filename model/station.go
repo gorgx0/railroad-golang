@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"os"
 )
 
@@ -22,13 +23,13 @@ func (s Station) Print() {
 func LoadStations(filename string) []Station {
 	file, err := os.Open(filename)
 	if err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 	bytes, err := io.ReadAll(file)
 	var stations []Station
 	err2 := json.Unmarshal(bytes, &stations)
 	if err2 != nil {
-		panic(err2)
+		log.Panic(err)
 	}
 	return stations
 }
