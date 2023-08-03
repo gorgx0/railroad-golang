@@ -20,15 +20,15 @@ func (s Station) Print() {
 }
 
 func LoadStations(filename string) []Station {
-	file, error := os.Open(filename)
-	if error != nil {
-		panic(error)
-	}
-	bytes, error := io.ReadAll(file)
-	var stations []Station
-	err := json.Unmarshal(bytes, &stations)
+	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
+	}
+	bytes, err := io.ReadAll(file)
+	var stations []Station
+	err2 := json.Unmarshal(bytes, &stations)
+	if err2 != nil {
+		panic(err2)
 	}
 	return stations
 }
