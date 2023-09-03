@@ -20,7 +20,6 @@ type Station struct {
 
 func (s Station) Print() {
 	fmt.Printf("%s (%d)\n", s.Name, s.Id)
-	println(s.Name, s.Id)
 }
 
 func (s Station) Store(db *sql.DB) error {

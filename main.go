@@ -31,4 +31,13 @@ func main() {
 			log.Println(err.Error())
 		}
 	}
+
+	stations, err = model.GetAllStations(db)
+	if err != nil {
+		log.Panicf(err.Error())
+	}
+
+	for _, station := range stations {
+		station.Print()
+	}
 }
