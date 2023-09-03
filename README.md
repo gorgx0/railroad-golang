@@ -17,6 +17,17 @@ Install goose
 ```bash
 go install github.com/pressly/goose/v3/cmd/goose@latest
 ```
+or
+```bash
+brew install goose
+```
+
+setup env
+```bash
+export GOOSE_DBSTRING="host=localhost user=postgres dbname=railway sslmode=disable password=postgres"
+export GOOSE_DRIVER=postgres
+```
+
 Create migrtation
 ```bash
 ~/go/bin/goose -v -dir db.migrations create create_stations_table sql

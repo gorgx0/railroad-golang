@@ -1,0 +1,10 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "db": "railway",
+    "user": "postgres",
+    "password": "postgres"
+  },
+  "stations_file": "stations.json"
+}
