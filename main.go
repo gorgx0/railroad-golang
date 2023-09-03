@@ -20,9 +20,6 @@ func main() {
 	}(db)
 
 	for _, station := range stations {
-		_, err := db.Exec("INSERT INTO stations (id, name, lat, lng) VALUES ($1, $2, $3, $4)", station.Id, station.Name, station.Lat, station.Lng)
-		if err != nil {
-			log.Panicf(err.Error())
-		}
+		station.Store(db)
 	}
 }

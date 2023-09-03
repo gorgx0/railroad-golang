@@ -1,14 +1,50 @@
 [
   {
-    "lng": -122.4194,
-    "lat": 37.7749,
-    "name": "San Francisco, CA",
-    "id": "1"
+    "id": 1,
+    "name": "Albany-Rensselaer Station",
+    "location": {
+      "latitude": 42.6414,
+      "longitude": -73.7487
+    }
   },
   {
-    "lng": -73.935242,
-    "lat": 40.730610,
-    "name": "New York, NY",
-    "id": "2"
+    "id": 2,
+    "name": "Buffalo–Exchange Street Station",
+    "location": {
+      "latitude": 42.8779,
+      "longitude": -78.8715
+    }
+  },
+  {
+    "id": 3,
+    "name": "Syracuse Regional Transportation Center",
+    "location": {
+      "latitude": 43.0768,
+      "longitude": -76.1575
+    }
+  },
+  {
+    "id": 4,
+    "name": "Rochester Station",
+    "location": {
+      "latitude": 43.1569,
+      "longitude": -77.6192
+    }
+  },
+  {
+    "id": 5,
+    "name": "Poughkeepsie Station",
+    "location": {
+      "latitude": 41.7061,
+      "longitude": -73.9394
+    }
+  },
+  {
+    "id": 6,
+    "name": "Utica Union Station",
+    "location": {
+      "latitude": 43.1043,
+      "longitude": -75.2264
+    }
   }
 ]
