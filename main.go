@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	currentConfig, err := config.ReadConfigFile("config.json")
+	currentConfig, err := config.ReadConfigFromFile("config.json")
 	if err != nil {
 		log.Panicf(err.Error())
 	}
@@ -38,7 +38,7 @@ func menu(currentConfig config.Config) bool {
 	switch choice {
 	case "1":
 		fmt.Println("Loading stations from JSON file into database")
-		loadingStationsFromJsonFile(currentConfig.Database)
+		loadingStationsFromJsonFile(currentConfig)
 	case "2":
 		fmt.Println("Printing all stations from database")
 		printAllStationsFromDatabase(currentConfig.Database)
@@ -92,16 +92,16 @@ func printAllStationsFromDatabase(dbConfig config.DatabaseConfig) {
 	}
 }
 
-func loadingStationsFromJsonFile(dbConfig config.DatabaseConfig) {
+func loadingStationsFromJsonFile(config config.Config) {
 	var stations []model.Station
 	var err error
-	stations, err = model.LoadStationsFromJsonFile("stations.json")
+	stations, err = model.LoadStationsFromJsonFile(config.StationsFile)
 	if err != nil {
 		log.Panicf(err.Error())
 	}
 
 	var db *sql.DB
-	db, err = database.GetDBConnection(dbConfig)
+	db, err = database.GetDBConnection(config.Database)
 	if err != nil {
 		log.Panicf(err.Error())
 	}

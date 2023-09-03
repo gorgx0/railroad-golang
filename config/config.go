@@ -6,7 +6,8 @@ import (
 )
 
 type Config struct {
-	Database DatabaseConfig `json:"database"`
+	Database     DatabaseConfig `json:"database"`
+	StationsFile string         `json:"stations_file"`
 }
 
 type DatabaseConfig struct {
@@ -17,7 +18,7 @@ type DatabaseConfig struct {
 	Password string `json:"password"`
 }
 
-func ReadConfigFile(filename string) (Config, error) {
+func ReadConfigFromFile(filename string) (Config, error) {
 	var config Config
 	configFile, err := os.Open(filename)
 	if err != nil {
