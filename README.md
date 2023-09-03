@@ -12,6 +12,26 @@ docker run --name postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=railway 
 go run main.go
 ```
 
+## DATABASE VERSIONING
+Install goose
+```bash
+go install github.com/pressly/goose/v3/cmd/goose@latest
+```
+Create migrtation
+```bash
+~/go/bin/goose -v -dir db.migrations create create_stations_table sql
+```
+
+status
+```bash
+goose -dir db.migrations postgres "host=localhost user=postgres dbname=railway sslmode=disable password=postgres" status
+```
+
+migrate
+```bash
+goose -dir db.migrations postgres "host=localhost user=postgres dbname=railway sslmode=disable password=postgres" up
+```
+
 
 ## TODO
 - make methods return err instead of panic
