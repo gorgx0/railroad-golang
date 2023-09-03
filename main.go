@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	var stations, err = model.LoadStations("stations.json")
+	var stations, err = model.LoadStationsFromJsonFile("stations.json")
 	if err != nil {
 		log.Panicf(err.Error())
 	}
@@ -26,6 +26,9 @@ func main() {
 	}(db)
 
 	for _, station := range stations {
-		station.Store(db)
+		err := station.Store(db)
+		if err != nil {
+			log.Println(err.Error())
+		}
 	}
 }

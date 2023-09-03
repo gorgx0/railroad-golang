@@ -28,13 +28,13 @@ func (s Station) Store(db *sql.DB) error {
 	return err
 }
 
-func LoadStations(filename string) ([]Station, error) {
+func LoadStationsFromJsonFile(filename string) ([]Station, error) {
 	var file, err = os.Open(filename)
 
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
-			log.Panic(err)
+			log.Println(err)
 		}
 	}(file)
 
