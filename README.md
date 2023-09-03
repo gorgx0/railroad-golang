@@ -4,10 +4,9 @@ docker run --rm  --name postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=ra
 ```
 
 ## TODO
+- make methods return err instead of panic
 - add cli interface
 - add db data persistence to docker
 - externalize configuration
-- make methods return err instead of panic
 - add db versioning
 - introduce proper tests
-- 

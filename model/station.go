@@ -19,19 +19,17 @@ type Station struct {
 }
 
 func (s Station) Print() {
-	fmt.Printf("%s (%s)\n", s.Name, s.Id)
+	fmt.Printf("%s (%d)\n", s.Name, s.Id)
 	println(s.Name, s.Id)
 }
 
-func (s Station) Store(db *sql.DB) {
+func (s Station) Store(db *sql.DB) error {
 	_, err := db.Exec("INSERT INTO stations (id, name, lat, lng) VALUES ($1, $2, $3, $4)", s.Id, s.Name, s.Location.Latitude, s.Location.Longitude)
-	if err != nil {
-		log.Panicf(err.Error())
-	}
+	return err
 }
 
-func LoadStations(filename string) []Station {
-	file, err := os.Open(filename)
+func LoadStations(filename string) ([]Station, error) {
+	var file, err = os.Open(filename)
 
 	defer func(file *os.File) {
 		err := file.Close()
@@ -41,36 +39,38 @@ func LoadStations(filename string) []Station {
 	}(file)
 
 	if err != nil {
-		log.Panic(err)
+		return nil, err
 	}
+
 	bytes, err := io.ReadAll(file)
 	var stations []Station
-	err2 := json.Unmarshal(bytes, &stations)
-	if err2 != nil {
-		log.Panic(err2)
+	err = json.Unmarshal(bytes, &stations)
+	if err != nil {
+		return nil, err
 	}
-	return stations
+	return stations, nil
 }
 
-func GetAllStations(db *sql.DB) []Station {
+func GetAllStations(db *sql.DB) ([]Station, error) {
 	rows, err := db.Query("SELECT id, name, lat, lng FROM stations")
 	if err != nil {
-		log.Panic(err)
+		return nil, err
 	}
 	defer func(rows *sql.Rows) {
 		err := rows.Close()
 		if err != nil {
-			log.Panic(err)
+			log.Println(err)
 		}
 	}(rows)
+
 	var stations []Station
 	for rows.Next() {
 		var station Station
 		err := rows.Scan(&station.Id, &station.Name, &station.Location.Latitude, &station.Location.Longitude)
 		if err != nil {
-			log.Panic(err)
+			return stations, err
 		}
 		stations = append(stations, station)
 	}
-	return stations
+	return stations, nil
 }

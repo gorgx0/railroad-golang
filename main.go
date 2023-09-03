@@ -8,9 +8,15 @@ import (
 )
 
 func main() {
-	stations := model.LoadStations("stations.json")
+	var stations, err = model.LoadStations("stations.json")
+	if err != nil {
+		log.Panicf(err.Error())
+	}
 
-	db := database.GetDBConnection()
+	db, err := database.GetDBConnection()
+	if err != nil {
+		log.Panicf(err.Error())
+	}
 
 	defer func(db *sql.DB) {
 		err := db.Close()
