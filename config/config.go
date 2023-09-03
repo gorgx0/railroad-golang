@@ -1,8 +1,7 @@
-package main
+package config
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 )
 
@@ -18,7 +17,7 @@ type DatabaseConfig struct {
 	Password string `json:"password"`
 }
 
-func readConfigFile(filename string) (Config, error) {
+func ReadConfigFile(filename string) (Config, error) {
 	var config Config
 	configFile, err := os.Open(filename)
 	if err != nil {
@@ -32,17 +31,4 @@ func readConfigFile(filename string) (Config, error) {
 	}
 
 	return config, nil
-}
-
-func main() {
-	config, err := readConfigFile("config.json")
-	if err != nil {
-		fmt.Println("Error reading configuration:", err)
-		return
-	}
-
-	fmt.Println("Database Host:", config.Database.Host)
-	fmt.Println("Database Port:", config.Database.Port)
-	fmt.Println("Database User:", config.Database.User)
-	fmt.Println("Database Name:", config.Database.Db)
 }
