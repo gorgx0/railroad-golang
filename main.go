@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 	"railway/config"
 	"railway/database"
 	"railway/model"
@@ -47,7 +48,7 @@ func menu(currentConfig config.Config) bool {
 		removeAllStationFromDatabase(currentConfig.Database)
 	case "4":
 		fmt.Println("Exiting")
-		return true
+		os.Exit(0)
 	default:
 		fmt.Println("Invalid choice")
 	}
@@ -87,9 +88,11 @@ func printAllStationsFromDatabase(dbConfig config.DatabaseConfig) {
 		log.Panicf(err.Error())
 	}
 
+	fmt.Println("======== Stations Start ========")
 	for _, station := range stations {
 		station.Print()
 	}
+	fmt.Println("======== Stations End ========")
 }
 
 func loadingStationsFromJsonFile(config config.Config) {
