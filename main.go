@@ -13,6 +13,9 @@ func main() {
 	}
 
 	for {
-		menu.Menu(currentConfig)
+		err := menu.Menu(currentConfig)
+		if err != nil {
+			log.Panicf(err.Error())
+		}
 	}
 }

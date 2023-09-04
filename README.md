@@ -46,6 +46,4 @@ goose -dir db.migrations postgres "host=localhost user=postgres dbname=railway s
 
 ## TODO
 - make methods return err instead of panic
-- externalize configuration
-- add db versioning
 - introduce proper tests

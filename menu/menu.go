@@ -10,7 +10,7 @@ import (
 	"railway/model"
 )
 
-func Menu(currentConfig config.Config) bool {
+func Menu(currentConfig config.Config) error {
 	fmt.Println("Menu:")
 	fmt.Println("1. Load stations from JSON file into database")
 	fmt.Println("2. Print all stations from database")
@@ -22,34 +22,36 @@ func Menu(currentConfig config.Config) bool {
 	var err error
 	_, err = fmt.Scanln(&choice)
 	if err != nil {
-		log.Panicf(err.Error())
+		return err
 	}
 
 	switch choice {
 	case "1":
 		fmt.Println("Loading stations from JSON file into database")
-		loadingStationsFromJsonFile(currentConfig)
+		return loadingStationsFromJsonFile(currentConfig)
 	case "2":
 		fmt.Println("Printing all stations from database")
-		printAllStationsFromDatabase(currentConfig.Database)
+		return printAllStationsFromDatabase(currentConfig.Database)
 	case "3":
 		fmt.Println("Removing all stations from database")
-		removeAllStationFromDatabase(currentConfig.Database)
+		return removeAllStationFromDatabase(currentConfig.Database)
 	case "4":
 		fmt.Println("Exiting")
 		os.Exit(0)
 	default:
 		fmt.Println("Invalid choice")
 	}
-	return false
+	return nil
 }
 
-func removeAllStationFromDatabase(dbConfig config.DatabaseConfig) {
-	var db *sql.DB
-	var err error
+func removeAllStationFromDatabase(dbConfig config.DatabaseConfig) error {
+	var (
+		db  *sql.DB
+		err error
+	)
 	db, err = database.GetDBConnection(dbConfig)
 	if err != nil {
-		log.Panicf(err.Error())
+		return err
 	}
 
 	defer func(db *sql.DB) {
@@ -59,22 +61,26 @@ func removeAllStationFromDatabase(dbConfig config.DatabaseConfig) {
 		}
 	}(db)
 
-	_, err = db.Exec("DELETE FROM stations")
+	_, err = db.Exec("DELETE FROM stations WHERE true")
 	if err != nil {
-		log.Panicf(err.Error())
+		return err
 	}
+	return nil
 }
 
-func printAllStationsFromDatabase(dbConfig config.DatabaseConfig) {
+func printAllStationsFromDatabase(dbConfig config.DatabaseConfig) error {
 	var db *sql.DB
 	var err error
 	var stations []model.Station
 
 	db, err = database.GetDBConnection(dbConfig)
+	if err != nil {
+		return err
+	}
 
 	stations, err = model.GetAllStations(db)
 	if err != nil {
-		log.Panicf(err.Error())
+		return err
 	}
 
 	fmt.Println("======== Stations Start ========")
@@ -82,20 +88,21 @@ func printAllStationsFromDatabase(dbConfig config.DatabaseConfig) {
 		station.Print()
 	}
 	fmt.Println("======== Stations End ========")
+	return nil
 }
 
-func loadingStationsFromJsonFile(config config.Config) {
+func loadingStationsFromJsonFile(config config.Config) error {
 	var stations []model.Station
 	var err error
 	stations, err = model.LoadStationsFromJsonFile(config.StationsFile)
 	if err != nil {
-		log.Panicf(err.Error())
+		return err
 	}
 
 	var db *sql.DB
 	db, err = database.GetDBConnection(config.Database)
 	if err != nil {
-		log.Panicf(err.Error())
+		return err
 	}
 
 	defer func(db *sql.DB) {
@@ -108,7 +115,8 @@ func loadingStationsFromJsonFile(config config.Config) {
 	for _, station := range stations {
 		err := station.Store(db)
 		if err != nil {
-			log.Println(err.Error())
+			return err
 		}
 	}
+	return nil
 }
