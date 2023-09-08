@@ -15,7 +15,8 @@ func Menu(currentConfig config.Config) error {
 	fmt.Println("1. Load stations from JSON file into database")
 	fmt.Println("2. Print all stations from database")
 	fmt.Println("3. Remove all stations from database")
-	fmt.Println("4. Exit")
+	fmt.Println("4. Get rectangle")
+	fmt.Println("X. Exit")
 	fmt.Println("Enter your choice: ")
 
 	var choice string
@@ -36,6 +37,14 @@ func Menu(currentConfig config.Config) error {
 		fmt.Println("Removing all stations from database")
 		return removeAllStationFromDatabase(currentConfig.Database)
 	case "4":
+		fmt.Println("Getting rectangle")
+		rectangle, err := model.GetRectangle(currentConfig.Database)
+		if err != nil {
+			return err
+		}
+		rectangle.Print()
+		return nil
+	case "x", "X":
 		fmt.Println("Exiting")
 		os.Exit(0)
 	default:
