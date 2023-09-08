@@ -3,6 +3,8 @@ package menu
 import (
 	"database/sql"
 	"fmt"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/canvas"
 	"log"
 	"os"
 	"railway/config"
@@ -15,7 +17,7 @@ func Menu(currentConfig config.Config) error {
 	fmt.Println("1. Load stations from JSON file into database")
 	fmt.Println("2. Print all stations from database")
 	fmt.Println("3. Remove all stations from database")
-	fmt.Println("4. Get rectangle")
+	fmt.Println("4. Display map")
 	fmt.Println("X. Exit")
 	fmt.Println("Enter your choice: ")
 
@@ -37,12 +39,19 @@ func Menu(currentConfig config.Config) error {
 		fmt.Println("Removing all stations from database")
 		return removeAllStationFromDatabase(currentConfig.Database)
 	case "4":
-		fmt.Println("Getting rectangle")
-		rectangle, err := model.GetRectangle(currentConfig.Database)
+		fmt.Println("Showing map")
+		image, err := model.GetMapImage(currentConfig.Database)
 		if err != nil {
 			return err
 		}
-		rectangle.Print()
+		app := app.New()
+		w := app.NewWindow("Railway")
+
+		mapCanvas := canvas.NewImageFromImage(image)
+		mapCanvas.FillMode = canvas.ImageFillOriginal
+		w.SetContent(mapCanvas)
+		w.ShowAndRun()
+
 		return nil
 	case "x", "X":
 		fmt.Println("Exiting")
