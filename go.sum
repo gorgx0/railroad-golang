@@ -1,3 +1,5 @@
+fyne.io/fyne/v2 v2.4.0 h1:LlyOyHmvkSo9IBm3aY+NVWSBIw+GMnssmyyIMK8F7zM=
+fyne.io/fyne/v2 v2.4.0/go.mod h1:AWM1iPM2YfliduZ4u/kQzP9E6ARIWm0gg+57GpYzWro=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/flopp/go-coordsparser v0.0.0-20201115094714-8baaeb7062d5 h1:o5yuyiGtJ4c9ECOq12K6EqsQNnsGF6I+WqBZynB2Hlw=
 github.com/flopp/go-coordsparser v0.0.0-20201115094714-8baaeb7062d5/go.mod h1:t5EAdR9sDhKR06Ix2ZS/8jt8INpzeV3P5uVyEkCDYJc=

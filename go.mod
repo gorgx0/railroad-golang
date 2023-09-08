@@ -5,6 +5,7 @@ go 1.20
 require github.com/lib/pq v1.10.9
 
 require (
+	fyne.io/fyne/v2 v2.4.0 // indirect
 	github.com/flopp/go-coordsparser v0.0.0-20201115094714-8baaeb7062d5 // indirect
 	github.com/flopp/go-staticmaps v0.0.0-20220221183018-c226716bec53 // indirect
 	github.com/fogleman/gg v1.3.0 // indirect
