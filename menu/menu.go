@@ -31,13 +31,13 @@ func Menu(currentConfig config.Config) error {
 	switch choice {
 	case "1":
 		fmt.Println("Loading stations from JSON file into database")
-		return loadingStationsFromJsonFile(currentConfig)
+		return LoadingStationsFromJsonFile(currentConfig)
 	case "2":
 		fmt.Println("Printing all stations from database")
-		return printAllStationsFromDatabase(currentConfig.Database)
+		return PrintAllStationsFromDatabase(currentConfig.Database)
 	case "3":
 		fmt.Println("Removing all stations from database")
-		return removeAllStationFromDatabase(currentConfig.Database)
+		return RemoveAllStationFromDatabase(currentConfig.Database)
 	case "4":
 		fmt.Println("Showing map")
 		image, err := model.GetMapImage(currentConfig.Database)
@@ -62,7 +62,7 @@ func Menu(currentConfig config.Config) error {
 	return nil
 }
 
-func removeAllStationFromDatabase(dbConfig config.DatabaseConfig) error {
+func RemoveAllStationFromDatabase(dbConfig config.DatabaseConfig) error {
 	var (
 		db  *sql.DB
 		err error
@@ -86,7 +86,7 @@ func removeAllStationFromDatabase(dbConfig config.DatabaseConfig) error {
 	return nil
 }
 
-func printAllStationsFromDatabase(dbConfig config.DatabaseConfig) error {
+func PrintAllStationsFromDatabase(dbConfig config.DatabaseConfig) error {
 	var db *sql.DB
 	var err error
 	var stations []model.Station
@@ -109,7 +109,7 @@ func printAllStationsFromDatabase(dbConfig config.DatabaseConfig) error {
 	return nil
 }
 
-func loadingStationsFromJsonFile(config config.Config) error {
+func LoadingStationsFromJsonFile(config config.Config) error {
 	var stations []model.Station
 	var err error
 	stations, err = model.LoadStationsFromJsonFile(config.StationsFile)
