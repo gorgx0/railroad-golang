@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	"log"
 	"railway/config"
@@ -21,7 +23,6 @@ func main() {
 	window := app.NewWindow("Railway")
 	window.Resize(fyne.NewSize(800, 600))
 	window.CenterOnScreen()
-	window.SetContent(widget.NewLabel("Hello World"))
 	window.SetMainMenu(fyne.NewMainMenu(
 		fyne.NewMenu("File",
 			fyne.NewMenuItem("Load stations", func() {
@@ -54,6 +55,21 @@ func main() {
 			fyne.NewMenuItem("Quit", func() {
 				app.Quit()
 			}))))
+
+	statusBar := widget.NewLabel("Status: OK")
+	statusBar.Position()
+
+	vbox := container.NewVBox(
+		widget.NewButton("Menu01", func() {
+			fmt.Println("Menu01")
+			statusBar.SetText("Status: Menu01")
+		}),
+		widget.NewButton("Menu02", func() {
+			fmt.Println("Menu02")
+		}),
+		statusBar,
+	)
+	window.SetContent(vbox)
 	window.ShowAndRun()
 
 	for {
