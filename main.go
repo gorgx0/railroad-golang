@@ -60,12 +60,21 @@ func main() {
 	statusBar.Position()
 
 	vbox := container.NewVBox(
-		widget.NewButton("Menu01", func() {
-			fmt.Println("Menu01")
-			statusBar.SetText("Status: Menu01")
+		widget.NewButton("Load stations", func() {
+			fmt.Println("Loading stations")
+			statusBar.SetText("Stations loaded")
 		}),
-		widget.NewButton("Menu02", func() {
-			fmt.Println("Menu02")
+		widget.NewButton("Print statiosn", func() {
+			fmt.Println("Printing stations")
+			statusBar.SetText("Stations printed")
+		}),
+		widget.NewButton("Remove stations", func() {
+			fmt.Println("Removing stations")
+			statusBar.SetText("Stations removed")
+		}),
+		widget.NewButton("Show map", func() {
+			fmt.Println("Showing map")
+			statusBar.SetText("Map shown")
 		}),
 		statusBar,
 	)
