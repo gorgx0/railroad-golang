@@ -3,64 +3,11 @@ package menu
 import (
 	"database/sql"
 	"fmt"
-	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
 	"log"
-	"os"
 	"railway/config"
 	"railway/database"
 	"railway/model"
 )
-
-func Menu(currentConfig config.Config) error {
-	fmt.Println("Menu:")
-	fmt.Println("1. Load stations from JSON file into database")
-	fmt.Println("2. Print all stations from database")
-	fmt.Println("3. Remove all stations from database")
-	fmt.Println("4. Display map")
-	fmt.Println("X. Exit")
-	fmt.Println("Enter your choice: ")
-
-	var choice string
-	var err error
-	_, err = fmt.Scanln(&choice)
-	if err != nil {
-		return err
-	}
-
-	switch choice {
-	case "1":
-		fmt.Println("Loading stations from JSON file into database")
-		return LoadingStationsFromJsonFile(currentConfig)
-	case "2":
-		fmt.Println("Printing all stations from database")
-		return PrintAllStationsFromDatabase(currentConfig.Database)
-	case "3":
-		fmt.Println("Removing all stations from database")
-		return RemoveAllStationFromDatabase(currentConfig.Database)
-	case "4":
-		fmt.Println("Showing map")
-		image, err := model.GetMapImage(currentConfig.Database)
-		if err != nil {
-			return err
-		}
-		app := app.New()
-		w := app.NewWindow("Railway")
-
-		mapCanvas := canvas.NewImageFromImage(image)
-		mapCanvas.FillMode = canvas.ImageFillOriginal
-		w.SetContent(mapCanvas)
-		w.ShowAndRun()
-
-		return nil
-	case "x", "X":
-		fmt.Println("Exiting")
-		os.Exit(0)
-	default:
-		fmt.Println("Invalid choice")
-	}
-	return nil
-}
 
 func RemoveAllStationFromDatabase(dbConfig config.DatabaseConfig) error {
 	var (

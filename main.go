@@ -92,7 +92,9 @@ func main() {
 			}
 			mapCanvas := canvas.NewImageFromImage(image)
 			mapCanvas.FillMode = canvas.ImageFillOriginal
-			window.SetContent(mapCanvas)
+			mapWindow := app.NewWindow("Railway Map")
+			mapWindow.SetContent(mapCanvas)
+			mapWindow.Show()
 			statusBar.SetText("Map shown")
 		}),
 		widget.NewButton("Quit", func() {
@@ -102,11 +104,4 @@ func main() {
 	)
 	window.SetContent(vbox)
 	window.ShowAndRun()
-
-	for {
-		err := menu.Menu(currentConfig)
-		if err != nil {
-			log.Panicf(err.Error())
-		}
-	}
 }
