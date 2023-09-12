@@ -62,19 +62,41 @@ func main() {
 	vbox := container.NewVBox(
 		widget.NewButton("Load stations", func() {
 			fmt.Println("Loading stations")
+			err := menu.LoadingStationsFromJsonFile(currentConfig)
+			if err != nil {
+				log.Panicf(err.Error())
+			}
 			statusBar.SetText("Stations loaded")
 		}),
 		widget.NewButton("Print statiosn", func() {
 			fmt.Println("Printing stations")
+			err := menu.PrintAllStationsFromDatabase(currentConfig.Database)
+			if err != nil {
+				log.Panicf(err.Error())
+			}
 			statusBar.SetText("Stations printed")
 		}),
 		widget.NewButton("Remove stations", func() {
 			fmt.Println("Removing stations")
+			err := menu.RemoveAllStationFromDatabase(currentConfig.Database)
+			if err != nil {
+				log.Panicf(err.Error())
+			}
 			statusBar.SetText("Stations removed")
 		}),
 		widget.NewButton("Show map", func() {
 			fmt.Println("Showing map")
+			image, err := model.GetMapImage(currentConfig.Database)
+			if err != nil {
+				log.Panicf(err.Error())
+			}
+			mapCanvas := canvas.NewImageFromImage(image)
+			mapCanvas.FillMode = canvas.ImageFillOriginal
+			window.SetContent(mapCanvas)
 			statusBar.SetText("Map shown")
+		}),
+		widget.NewButton("Quit", func() {
+			app.Quit()
 		}),
 		statusBar,
 	)
